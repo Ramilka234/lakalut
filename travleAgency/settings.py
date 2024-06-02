@@ -23,11 +23,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-2(*9!a6k!t3+u8bqdacm%$-2xld0gzq34tv&uhrjzd9-&_#h8('
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False') == 'true'
-ALLOWED_HOSTS = ['localhost','127.0.0.1']
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(" ")
 
 
 # Application definition
@@ -85,7 +85,10 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-DATABASES['default'] = dj_database_url.parse("postgres://travel_agency_django_render_user:Z6eXZJ0sqAnVJV8pdfw5F6kSbBkMBjaS@dpg-cpe5tef109ks73eq5qmg-a.oregon-postgres.render.com/travel_agency_django_render")
+
+database_url = os.environ.get("DATABASE_URL")
+
+DATABASES['default'] = dj_database_url.parse(database_url)
 #postgres://travel_agency_django_render_user:Z6eXZJ0sqAnVJV8pdfw5F6kSbBkMBjaS@dpg-cpe5tef109ks73eq5qmg-a.oregon-postgres.render.com/travel_agency_django_render
 
 # Password validation
